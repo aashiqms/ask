@@ -68,8 +68,9 @@ Moved to `Live reloading and SASS compilation`_.
 .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
 
 
-
-
+Code Explanation
+----------------
+- And so it's saying all right once you've created a instance of this post what should I do. Well we're going to say return and call the reverse.  Hopefully that we also talked a little bit about reverse lazy earlier on the right now we just need  reverse and we'll have some sort of view that is a detail view meaning we'll have eventually a post  detail your el and then something we're also going to  add in is a keyword argument dictionary or they'll  be args and that's going to be a dictionary where the primary key matches up with self.pk.  So all this is saying is after I create a post I'm done creating it
 
 Deployment
 ----------

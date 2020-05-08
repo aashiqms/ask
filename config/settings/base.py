@@ -33,7 +33,6 @@ USE_TZ = True
 LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 
 
-
 DATABASES = {
     "default": env.db("DATABASE_URL", default="postgres:///ask")
 }
