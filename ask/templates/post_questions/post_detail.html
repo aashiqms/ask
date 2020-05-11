@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+{% load bootstrap4 %}
+        <h1 class='posttitle loader'>{{ post.title }}</h1>
+
+        {% if post.published_date %}
+            <div class="date postdate">
+                {{ post.published_date }}
+            </div>
+
+        {% else %}
+            <a class="btn btn-outline-dark" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+
+      <p class='postcontent' >{{ post.questions|safe|linebreaksbr }}</p>
+
+
+      {% if user.is_authenticated %}
+          <a class="btn btn-dark" href="{% url 'post_edit' pk=post.pk %}">edit</a>
+          <a class="btn btn-dark" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove">remove</span></a>
+      {% endif %}
+
+
+  <hr>
+  <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+  <div class="container">
+
+
+  {% for comment in post.comments.all %}
+  <br>
+      {% if user.is_authenticated or comment.approved_comment %}
+
+              {{ comment.created_date }}
+              {% if not comment.approved_comment %}
+                  <a class="" href="{% url 'comment_remove' pk=comment.pk %}">
+                    <span class="remove-comment"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M5.72 5.72a.75.75 0 011.06 0L12 10.94l5.22-5.22a.75.75 0 111.06 1.06L13.06 12l5.22 5.22a.75.75 0 11-1.06 1.06L12 13.06l-5.22 5.22a.75.75 0 01-1.06-1.06L10.94 12 5.72 6.78a.75.75 0 010-1.06z"></path></svg></span></a>
+                  <a href="{% url 'comment_approve' pk=comment.pk %}"><span class="approve-comment"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M21.03 5.72a.75.75 0 010 1.06l-11.5 11.5a.75.75 0 01-1.072-.012l-5.5-5.75a.75.75 0 111.084-1.036l4.97 5.195L19.97 5.72a.75.75 0 011.06 0z"></path></svg></span></a>
+              {% endif %}
+
+          <p>{{ comment.text|safe|linebreaks }}</p>
+          <p>Posted by: <strong>{{ comment.author }}</strong></p>
+
+      {% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

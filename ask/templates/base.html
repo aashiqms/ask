@@ -22,10 +22,13 @@
 
 
     <!-- Your stuff: Third-party CSS libraries go here -->
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&display=swap" rel="stylesheet">
 
     <!-- This file stores project-specific CSS -->
+      <link rel="stylesheet" href="css/project.css">
 
-    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+      <link rel="stylesheet" href="{% static "django_extensions/css/base.css" %}">
 
 
     {% endblock %}
@@ -35,11 +38,11 @@
   <body>
 
     <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'home' %}">ask</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Ask</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
@@ -67,6 +70,7 @@
                 {# URL provided by django-allauth/account/urls.py #}
                 <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
               </li>
+
             {% endif %}
           </ul>
         </div>
@@ -84,21 +88,61 @@
 
       {% block content %}
 
-        <p>Use this document as a way to quick start any new project.</p>
-        <h1>welcome {{ user.username }}</h1>
-{% if user.is_authenticated %}
-  <li>
-    <a href="{% url 'post_new' %}">Post a New Question</a>
-  </li>
 
-  <li>
-    <a href="{% url 'post_draft_list' %}">Draft List of Questions(review now!)</a>
-  </li>
+
+                  {% if user.is_authenticated %}
+          <h1 class="">welcome {{ user.username }}</h1>
+{% else %}
+                     <h3 class="home-intro">Ask is a platform where you can get
+   answers for your questions</h3>
+<div class="container">
+  <div class="row">
+    <div class="col col-lg-6 col-sm-1">
+          <img style="width: 540px" height="554.36px" src="{% static "django_extensions/img/questionmark.svg" %}" alt="not found">
+    </div>
+    <div class="col col-lg-6 col-sm-1 login">
+      <p><button class="btn btn-primary login-home"><a style="color: white" href="{% url 'account_login' %}">Log In</a></button></p>
+      <p>Not yet a member? <a href="{% url 'account_signup' %}" style="color: black"><span style="color: orangered">Sign Up</span></a> for free</p>
+    </div>
+
+  </div>
+</div>
+
+        {% endif %}
+
+
+
+        {% if user.is_authenticated %}
+          <ul style="list-style-type:none;">
+          <li>
+            <p class="post_new btn btn btn-primary"><a href="{% url 'post_new' %}" style="color: white">Post a New Question</a></p>
+          </li>
+          <li>
+            <p class="post_draft_list btn btn-danger">
+     <a href="{% url 'post_draft_list' %}"><span style="color: white">Draft List</span></a>
+   </p>
+          </li>
+          <li>
+            <p class="post_list btn btn-info"><a href="{% url 'post_list' %}" style="color: white">All Questions</a></p>
+          </li>
+          </ul>
+
+
+
+
+
+
+
+
 
 {% endif %}
-      {% endblock content %}
 
-    </div> <!-- /container -->
+      {% endblock content %}
+<div id="content">
+        {% block list_view %}{% endblock %}
+    </div>
+    </div>
+    <!-- /container -->
 
     {% block modal %}{% endblock modal %}
 

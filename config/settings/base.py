@@ -61,6 +61,7 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "bootstrap4",
 ]
 
 LOCAL_APPS = [
@@ -124,7 +125,7 @@ MIDDLEWARE = [
 ]
 
 
-STATIC_ROOT = str(ROOT_DIR / "staticfiles")
+# STATIC_ROOT = str(ROOT_DIR / "staticfiles")
 
 STATIC_URL = "/static/"
 
@@ -238,3 +239,4 @@ SOCIALACCOUNT_ADAPTER = "ask.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
